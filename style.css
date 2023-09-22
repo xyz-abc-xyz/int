@@ -1,0 +1,79 @@
+/* Style for the header */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: center; /* Center horizontally */
+  background-color: rgb(36, 32, 32);
+  padding: 20px;
+}
+
+/* Style for the heading within the header */
+.header h1 {
+  font-size: 36px; /* Adjust the font size as needed */
+  color: white;
+  margin: 0; /* Remove any default margin */
+}
+
+/* Style for the image within the header */
+.header img {
+  max-width: 400px; /* Adjust the max-width as needed */
+  margin-right: 20px; /* Add margin to separate the image from the heading */
+}
+
+
+/* Rest of your CSS code remains unchanged */
+body {
+  background-color: rgb(94, 196, 196);
+  background-size: cover;
+  background-position: center;
+  box-sizing: border-box;
+  font-family: sans-serif;
+}
+h1{
+  background-color: blueviolet;
+  font-size: 36px; /* Adjust the font size as needed */
+  color: white;
+  margin: 0;
+}
+
+.box {
+  
+  background: rgb(75, 77, 78);
+  color: black; /* Changed color to black for better visibility */
+  width: 500px; /* Increased width of the box */
+  margin: auto; /* Center the box horizontally */
+  padding: 50px; /* Adjusted padding for better spacing */
+  box-sizing: border-box;
+  text-align: center; /* Center text content */
+}
+
+input[type="text"], input[type="password"] ,input[type="email"]
+{
+    border: none;
+    border-bottom: 1px solid #fff;
+    background: transparent;
+    outline: none;
+    height: 40px;
+    color: black;
+    font-size: 16px;
+}
+
+input[type="submit"]
+{
+    border: none;
+    outline: none;
+    height: 40px;
+    background: #64696e;
+    color: #fff;
+    font-size: 18px;
+    border-radius: 20px;
+
+}
+
+
+input[type="submit"]:hover
+{
+    cursor: pointer;
+    background: #b9c4ce;
+}
+
