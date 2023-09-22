@@ -38,8 +38,6 @@
   
   <script>
     let personData;
-
-    // Event listener for the "Load Data" button
     fetch('certificate.csv')
       .then(response => response.text())
       .then(csvData => {
