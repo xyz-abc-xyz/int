@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Certificate Verification</title>
+  <link rel="icon" href="icon.jpg">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="header">
+    <img src="icon.jpg">
+  </div>
+  <h1 style="text-align: center;">Certificate Verification</h1>
+  
+  <!-- Input element for selecting a CSV file -->
+  <input type="file" id="csvFile" accept=".csv">
+  
+  <!-- Button to load the CSV data from the selected file -->
+  <button id="loadButton">Load Data</button>
+  
+  <div class="box">
+    <form id="verificationForm">
+      <label for="CertificateId">Certificate Id (or) Certificate Url:</label>
+      <input type="text" id="certificateId" required><br><br>
+      <input type="submit" value="VALIDATE">
+    </form>
+  </div>
+  
+  <!-- Display certification details (hidden by default) -->
+  <div class="box">
+    <div id="certificationdetails" style="display: none;">
+      <h2>Certification Details:</h2>
+      <h3>Participant Name:</h3>
+      <p id="ParticipantName"></p>
+      <h3>Course Name:</h3>
+      <p id="CourseName"></p>
+      <h3>Completion Date:</h3>
+      <p id="CompletionDate"></p>
+    </div>
+  </div>
+
+  <!-- Include PapaParse library for CSV parsing -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+  
+  <script>
+    let personData;
+
+    // Event listener for the "Load Data" button
+    fetch('certificate.csv')
+      .then(response => response.text())
+      .then(csvData => {
+        processData(csvData);
+      })
+      .catch(error => {
+        console.error('Error fetching CSV data:', error);
+      });
+
+    // Function to process and parse CSV data
+    function processData(csvData) {
+      Papa.parse(csvData, {
+        complete: function(results) {
+          // Store the parsed CSV data in the personData variable
+          personData = results.data;
+        }
+      });
+    }
+
+    // Event listener for the certificate verification form
+    document.getElementById('verificationForm').addEventListener('submit', function(event) {
+      event.preventDefault();
+
+      // Get the input value (certificate ID or URL)
+      const certificateId = document.getElementById('certificateId').value;
+
+      // Perform certificate verification and get the details
+      const certificateDetails = predictName(certificateId);
+
+      // Display the details in the HTML
+      document.getElementById('ParticipantName').textContent = certificateDetails.ParticipantName;
+      document.getElementById('CourseName').textContent = certificateDetails.CourseName;
+      document.getElementById('CompletionDate').textContent = certificateDetails.CompletionDate;
+      document.getElementById('certificationdetails').style.display = 'block'; // Show the details section
+    });
+
+    // Function to predict certificate details based on ID or URL
+    function predictName(CertificateId) {
+      // Define column indices in the CSV data
+      const CertificateIdIndex = 0; // Index of Certificate Id column in the CSV file
+      const CertificateUrlIndex = 1; // Index of Certificate Url column in the CSV file
+      const ParticipantNameIndex = 2; // Index of Participant Name column in the CSV file
+      const CourseNameIndex = 3; // Index of Course Name column in the CSV file
+      const CompletionDateIndex = 4; // Index of Completion Date column in the CSV file
+
+      // Find the matching person in the loaded personData
+      for (let i = 1; i < personData.length; i++) { // Starting from index 1 to skip the header row
+        const row = personData[i];
+        const csvCertificateId = row[CertificateIdIndex];
+        const csvCertificateUrl = row[CertificateUrlIndex];
+
+        if (csvCertificateId === CertificateId || csvCertificateUrl === CertificateId) {
+          // Return the details if a match is found
+          return {
+            ParticipantName: row[ParticipantNameIndex],
+            CourseName: row[CourseNameIndex],
+            CompletionDate: row[CompletionDateIndex]
+          };
+        }
+      }
+
+      // Return a default message if no match is found
+      return {
+        ParticipantName: "Name not found",
+        CourseName: "",
+        CompletionDate: ""
+      };
+    }
+  </script>
+</body>
+</html>

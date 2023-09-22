@@ -1,0 +1,4 @@
+CertificateId, CertificateUrl, ParticipantName, CourseName, CompletionDate
+ABC123,http://example.com/abc123, John Doe, Web Development, 2023-09-30
+XYZ456,http://example.com/xyz456, Jane Smith, Data Science, 2023-10-15
+12345678,http://example.com/12345678, Alice Johnson, Mobile App Development, 2023-09-25
